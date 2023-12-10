@@ -23,7 +23,7 @@ filename = str(uuid.uuid4())
 clip.write_videofile(f"video_data_catalog/{filename}.mp4")
 
 # get automatic metadata
-helper.darkSetting(filepath)
+video_dark_setting = helper.darkSetting(filepath)
 duration = clip.duration
 
 
@@ -39,4 +39,5 @@ cursor.execute("SELECT * FROM video_metadata")
 print(cursor.fetchall())
 
 
-#./raw_data/IMG_0881.MOV
+#./raw_data/IMG_0881.MOV      dark
+#./raw_data/IMG_0888.MOV      light

@@ -17,5 +17,5 @@ def darkSetting(filepath: str):
         class_sum = class_sum + frame_classification
         nbr_frames += 1
 
-    video_dark_setting = "Dark" if class_sum/nbr_frames < 0.5 else "light"
+    video_dark_setting = "dark" if class_sum/nbr_frames < 0.5 else "light"
     return video_dark_setting
