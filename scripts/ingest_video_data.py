@@ -7,7 +7,7 @@ import ingest_video_data_help_methods as helper
 sqliteConnection = sqlite3.connect('vdms_meta_data.db')
 cursor = sqliteConnection.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS video_metadata
-                  (filename TEXT, description TEXT, duration REAL, dark_setting TEXT)
+                  (filename TEXT, description TEXT, duration REAL, dark_setting TEXT, nbr_people INTEGER)
                """)
 sqliteConnection.commit()
 
@@ -24,11 +24,12 @@ clip.write_videofile(f"video_data_catalog/{filename}.mp4")
 
 # get automatic metadata
 video_dark_setting = helper.darkSetting(filepath)
+nbr_people = helper.nbrPeopleInVideo(filepath)
 duration = clip.duration
 
 
 # save video metadata in DB 
-cursor.execute("INSERT INTO video_metadata (filename, description, duration, dark_setting) VALUES (?, ?, ?, ?)",(filename, description, duration, video_dark_setting))
+cursor.execute("INSERT INTO video_metadata (filename, description, duration, dark_setting, nbr_people) VALUES (?, ?, ?, ?, ?)",(filename, description, duration, video_dark_setting, nbr_people))
 sqliteConnection.commit()
 
 
@@ -39,5 +40,8 @@ cursor.execute("SELECT * FROM video_metadata")
 print(cursor.fetchall())
 
 
-#./raw_data/IMG_0881.MOV      dark
-#./raw_data/IMG_0888.MOV      light
+#./raw_data/IMG_0881.MOV
+#./raw_data/IMG_0882.MOV
+#./raw_data/IMG_0888.MOV
+#./raw_data/IMG_0891.MOV
+#./raw_data/IMG_0894.MOV
