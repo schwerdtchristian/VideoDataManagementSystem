@@ -7,7 +7,7 @@ import ingest_video_data_help_methods as helper
 sqliteConnection = sqlite3.connect('vdms_meta_data.db')
 cursor = sqliteConnection.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS video_metadata
-                  (filename TEXT, description TEXT, duration REAL, dark_setting TEXT, nbr_people INTEGER)
+                  (filename TEXT, description TEXT, duration REAL, dark_setting TEXT, nbr_people INTEGER, fps INTEGER)
                """)
 sqliteConnection.commit()
 
@@ -26,10 +26,11 @@ clip.write_videofile(f"video_data_catalog/{filename}.mp4")
 video_dark_setting = helper.darkSetting(filepath)
 nbr_people = helper.nbrPeopleInVideo(filepath)
 duration = clip.duration
+fps = clip.fps
 
 
 # save video metadata in DB 
-cursor.execute("INSERT INTO video_metadata (filename, description, duration, dark_setting, nbr_people) VALUES (?, ?, ?, ?, ?)",(filename, description, duration, video_dark_setting, nbr_people))
+cursor.execute("INSERT INTO video_metadata (filename, description, duration, dark_setting, nbr_people, fps) VALUES (?, ?, ?, ?, ?, ?)",(filename, description, duration, video_dark_setting, nbr_people, fps))
 sqliteConnection.commit()
 
 
