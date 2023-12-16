@@ -1,6 +1,7 @@
 import moviepy.editor as moviepy
 import uuid
 import sqlite3 
+import os
 import ingest_video_data_help_methods as helper
 
 # create DB
@@ -20,6 +21,8 @@ description = input()
 # convert and save file with UUID
 clip = moviepy.VideoFileClip(filepath)
 filename = str(uuid.uuid4())
+if not os.path.exists("./video_data_catalog"):
+    os.mkdir("./video_data_catalog")
 clip.write_videofile(f"video_data_catalog/{filename}.mp4")
 
 # get automatic metadata
