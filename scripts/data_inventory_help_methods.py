@@ -1,7 +1,9 @@
 import sqlite3
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('agg')
+
+matplotlib.use("agg")
+
 
 def connectToDB(db_name):
     sqliteConnection = sqlite3.connect(db_name)
@@ -14,24 +16,32 @@ def getTotalNbrOfVideos(cursor):
 
 
 def getVideoLightSettings(cursor, total_nbr_videos):
-    cursor.execute(f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'dark'")
+    cursor.execute(
+        f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'dark'"
+    )
     nbr_videos_dark = cursor.fetchall()[0][0]
 
-    cursor.execute(f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'light'")
+    cursor.execute(
+        f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'light'"
+    )
     nbr_video_light = cursor.fetchall()[0][0]
 
-    nbr_other_video = total_nbr_videos-nbr_videos_dark-nbr_video_light
+    nbr_other_video = total_nbr_videos - nbr_videos_dark - nbr_video_light
 
-    return {'dark': nbr_videos_dark, 'light': nbr_video_light, 'other': nbr_other_video}
+    return {"dark": nbr_videos_dark, "light": nbr_video_light, "other": nbr_other_video}
 
 
 def getNbrDarkVideos(cursor):
-    cursor.execute(f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'dark'")
+    cursor.execute(
+        f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'dark'"
+    )
     return cursor.fetchall()[0][0]
 
 
 def getNbrLightVideos(cursor):
-    cursor.execute(f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'light'")
+    cursor.execute(
+        f"SELECT COUNT(*) FROM video_metadata WHERE dark_setting LIKE 'light'"
+    )
     return cursor.fetchall()[0][0]
 
 
@@ -53,23 +63,26 @@ def getFpsOfVideos(cursor):
     return [fps_of_video[0] for fps_of_video in fps_of_videos]
 
 
-def plot_data(total_nbr_videos,
+def plot_data(
+    total_nbr_videos,
     video_light_settings,
     nbr_people_in_videos,
     duration_of_videos,
-    fps_of_videos):
-    
-    fig, ax = plt.subplots(2,2)
+    fps_of_videos,
+):
+    fig, ax = plt.subplots(2, 2)
     fig.suptitle(f"Total number of videos: {total_nbr_videos}")
-    ax[0,0].bar(x=list(video_light_settings.keys()), height=list(video_light_settings.values()))
-    ax[1,0].hist(nbr_people_in_videos, bins = range(1, 10, 1))
-    ax[0,1].hist(duration_of_videos, bins = range(0, 10, 1))
-    ax[1,1].hist(fps_of_videos, bins = range(20, 40, 1))
-    
-    ax[0,0].set_title("Distribution of dark and light setting")
-    ax[1,0].set_title("Distribution of number of people in videos")
-    ax[0,1].set_title("Distribution of time duration of videos")
-    ax[1,1].set_title("Distribution of fps of videos")
+    ax[0, 0].bar(
+        x=list(video_light_settings.keys()), height=list(video_light_settings.values())
+    )
+    ax[1, 0].hist(nbr_people_in_videos, bins=range(1, 10, 1))
+    ax[0, 1].hist(duration_of_videos, bins=range(0, 10, 1))
+    ax[1, 1].hist(fps_of_videos, bins=range(20, 40, 1))
+
+    ax[0, 0].set_title("Distribution of dark and light setting")
+    ax[1, 0].set_title("Distribution of number of people in videos")
+    ax[0, 1].set_title("Distribution of time duration of videos")
+    ax[1, 1].set_title("Distribution of fps of videos")
     plt.show()
 
 
@@ -78,17 +91,19 @@ def get_dashboard(
     video_light_settings,
     nbr_people_in_videos,
     duration_of_videos,
-    fps_of_videos):
-    
-    fig, ax = plt.subplots(2,2)
+    fps_of_videos,
+):
+    fig, ax = plt.subplots(2, 2)
     fig.suptitle(f"Total number of videos: {total_nbr_videos}")
-    ax[0,0].bar(x=list(video_light_settings.keys()), height=list(video_light_settings.values()))
-    ax[1,0].hist(nbr_people_in_videos, bins = range(1, 10, 1))
-    ax[0,1].hist(duration_of_videos, bins = range(0, 10, 1))
-    ax[1,1].hist(fps_of_videos, bins = range(20, 40, 1))
-    
-    ax[0,0].set_title("Distribution of dark and light setting")
-    ax[1,0].set_title("Distribution of number of people in videos")
-    ax[0,1].set_title("Distribution of time duration of videos")
-    ax[1,1].set_title("Distribution of fps of videos")
+    ax[0, 0].bar(
+        x=list(video_light_settings.keys()), height=list(video_light_settings.values())
+    )
+    ax[1, 0].hist(nbr_people_in_videos, bins=range(1, 10, 1))
+    ax[0, 1].hist(duration_of_videos, bins=range(0, 10, 1))
+    ax[1, 1].hist(fps_of_videos, bins=range(20, 40, 1))
+
+    ax[0, 0].set_title("Distribution of dark and light setting")
+    ax[1, 0].set_title("Distribution of number of people in videos")
+    ax[0, 1].set_title("Distribution of time duration of videos")
+    ax[1, 1].set_title("Distribution of fps of videos")
     return plt
