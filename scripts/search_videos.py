@@ -1,10 +1,9 @@
 import sqlite3
 
-sqliteConnection = sqlite3.connect('vdms_meta_data.db')
-cursor = sqliteConnection.cursor()
+def searchDarkLightVideos(dark_light_setting):
 
-print("Do you want to search for videos in dark or light setting? Please write 'dark' or 'light'")
-darkOrLightSetting = input()
+    sqliteConnection = sqlite3.connect('vdms_meta_data.db')
+    cursor = sqliteConnection.cursor()
 
-cursor.execute(f"SELECT filename FROM video_metadata WHERE dark_setting LIKE '{darkOrLightSetting}'")
-print(cursor.fetchall())
+    cursor.execute(f"SELECT filename FROM video_metadata WHERE dark_setting LIKE '{dark_light_setting}'")
+    return cursor.fetchall()[0]

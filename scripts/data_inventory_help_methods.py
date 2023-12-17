@@ -1,5 +1,7 @@
 import sqlite3
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('agg')
 
 def connectToDB(db_name):
     sqliteConnection = sqlite3.connect(db_name)
@@ -69,3 +71,24 @@ def plot_data(total_nbr_videos,
     ax[0,1].set_title("Distribution of time duration of videos")
     ax[1,1].set_title("Distribution of fps of videos")
     plt.show()
+
+
+def get_dashboard(
+    total_nbr_videos,
+    video_light_settings,
+    nbr_people_in_videos,
+    duration_of_videos,
+    fps_of_videos):
+    
+    fig, ax = plt.subplots(2,2)
+    fig.suptitle(f"Total number of videos: {total_nbr_videos}")
+    ax[0,0].bar(x=list(video_light_settings.keys()), height=list(video_light_settings.values()))
+    ax[1,0].hist(nbr_people_in_videos, bins = range(1, 10, 1))
+    ax[0,1].hist(duration_of_videos, bins = range(0, 10, 1))
+    ax[1,1].hist(fps_of_videos, bins = range(20, 40, 1))
+    
+    ax[0,0].set_title("Distribution of dark and light setting")
+    ax[1,0].set_title("Distribution of number of people in videos")
+    ax[0,1].set_title("Distribution of time duration of videos")
+    ax[1,1].set_title("Distribution of fps of videos")
+    return plt

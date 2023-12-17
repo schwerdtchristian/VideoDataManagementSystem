@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <title>Video data management system</title> 
+</head> 
+  
+<body> 
+    <h1>Video search</h1> 
+    <h2>Please enter 'dark' or 'light'</h2>
+
+    <form method="post">
+        dark or light setting: <input name="dark_light_setting">
+        <button type="submit">submit</button>
+    </form>
+
+    {% for video in search_result %}
+      <p>{{ video }} </p>
+    {% endfor %}
+
+    <a href="/">Back</a>
+</body> 
+  
+</html>
