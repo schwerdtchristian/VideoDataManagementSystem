@@ -19,9 +19,8 @@ def videoUpload():
     filepath = request.form.get('filepath')
     description = request.form.get('description')
     uploadVideo(filepath, description)
-
-    return render_template('search_result.html')
-
+    
+    return render_template('video_upload_page.html', success = "Video successfully analyzed and stored")
 
 @app.route('/search_videos', methods=['GET', 'POST']) 
 def searchVideos():
