@@ -8,4 +8,4 @@ def searchDarkLightVideos(dark_light_setting):
     cursor.execute(
         f"SELECT filename FROM video_metadata WHERE dark_setting LIKE '{dark_light_setting}'"
     )
-    return cursor.fetchall()[0]
+    return [video[0] for video in cursor.fetchall()]
