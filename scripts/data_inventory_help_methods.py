@@ -106,4 +106,5 @@ def get_dashboard(
     ax[1, 0].set_title("Distribution of number of people in videos")
     ax[0, 1].set_title("Distribution of time duration of videos")
     ax[1, 1].set_title("Distribution of fps of videos")
+    plt.subplots_adjust(wspace=0.65, hspace=0.65)
     return plt
